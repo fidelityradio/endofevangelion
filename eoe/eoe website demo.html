@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Ball</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    #container {
+      max-width: 600px;
+      padding: 2rem;
+    }
+    button, input {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: none;
+      border: 1px solid #fff;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    button:hover {
+      background: #fff;
+      color: #000;
+    }
+    audio {
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <p>Please listen to the music.</p>
+    <audio id="audio" controls>
+      <source src="C:\Users\Iarlaith\Documents\eoe\endofevangelion demo.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+
+    function createButton(text, callback) {
+      const btn = document.createElement('button');
+      btn.textContent = text;
+      btn.onclick = callback;
+      return btn;
+    }
+
+    function askQuestion(text, onYes, onNo) {
+      container.innerHTML = `<p>${text}</p>`;
+      const yesBtn = createButton('Yes', onYes);
+      const noBtn = createButton('No', () => {
+        container.innerHTML = `<p>Oh well. Your presence will be missed.</p>`;
+      });
+      container.appendChild(yesBtn);
+      container.appendChild(noBtn);
+    }
+
+    function showRSVP() {
+      container.innerHTML = `
+        <p>RSVP to attend the ball.</p>
+        <form id="rsvpForm">
+          <input type="email" name="email" placeholder="Your email" required>
+          <input type="text" name="nickname" placeholder="Your nickname" required>
+          <button type="submit">Submit</button>
+        </form>
+      `;
+      const form = document.getElementById('rsvpForm');
+      form.onsubmit = function(e) {
+        e.preventDefault();
+        container.innerHTML = `<p>Thank you. Details will be sent to your inbox.</p>`;
+        // Email sending logic will be added later
+      };
+    }
+
+    setTimeout(() => {
+      askQuestion(
+        'Would you dance to this music?',
+        () => askQuestion(
+          'Would you like to attend the ball?',
+          showRSVP
+        )
+      );
+    }, 20000); // 20 seconds
+  </script>
+</body>
+</html>

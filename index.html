@@ -70,7 +70,6 @@
       pointer-events: none;
       transition: opacity 1s ease-out;
     }
-
   </style>
 </head>
 <body>
@@ -78,15 +77,18 @@
 
   <div id="container">
     <p>Please listen to the music.</p>
-    <audio id="audio" controls>
-      <source src="track.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
   </div>
+  <audio id="audio" controls>
+    <source src="track.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     const container = document.getElementById('container');
     const logo = document.getElementById('center-image');
+    const audio = document.getElementById('audio');
+
+    let questionsStarted = false;
 
     function createButton(text, callback) {
       const btn = document.createElement('button');
@@ -106,7 +108,7 @@
     }
 
     function showRSVP() {
-      logo.style.opacity = 0; // Fade out logo
+      logo.style.opacity = 0;
       container.innerHTML = `
         <p>RSVP to attend the ball.</p>
         <p>(July 17th)</p>
@@ -120,15 +122,18 @@
       `;
     }
 
-    setTimeout(() => {
-      askQuestion(
-        'Would you dance to this music?',
-        () => askQuestion(
-          'Would you like to attend the ball? (July 17th)',
-          showRSVP
-        )
-      );
-    }, 20000);
+    audio.addEventListener('play', () => {
+      if (!questionsStarted) {
+        questionsStarted = true;
+        askQuestion(
+          'Would you dance to this music?',
+          () => askQuestion(
+            'Would you like to attend the ball? (July 17th)',
+            showRSVP
+          )
+        );
+      }
+    });
   </script>
 </body>
 </html>

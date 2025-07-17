@@ -51,15 +51,6 @@
       margin-top: 2rem;
     }
 
-    iframe {
-      width: 100%;
-      max-width: 100%;
-      height: 600px;
-      border: none;
-      margin-top: 1rem;
-      overflow: auto;
-    }
-
     #center-image {
       position: absolute;
       top: 20%;
@@ -107,18 +98,11 @@
       container.appendChild(noBtn);
     }
 
-    function showRSVP() {
+    function showClosedMessage() {
       logo.style.opacity = 0;
       container.innerHTML = `
-        <p>RSVP to attend the ball.</p>
-        <p>(July 17th)</p>
-        <iframe 
-          src="https://docs.google.com/forms/d/e/1FAIpQLSdQuk3VpmOXGKgfnqTWpQ17GdLaO6-ynIu21FeXIfMSyTPlYw/viewform?embedded=true" 
-          frameborder="0" 
-          marginheight="0" 
-          marginwidth="0">
-          Loading…
-        </iframe>
+        <p>Unfortunately, The July 17th Ball is full.</p>
+        <p>Fear not, we will return soon.</p>
       `;
     }
 
@@ -128,8 +112,8 @@
         askQuestion(
           'Would you dance to this music?',
           () => askQuestion(
-            'Would you like to attend the ball? (July 17th)',
-            showRSVP
+            'Would you like to attend the ball?',
+            showClosedMessage
           )
         );
       }
